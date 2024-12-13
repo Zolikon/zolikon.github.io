@@ -3,20 +3,22 @@ import Button from "../components/Button";
 import { useRef, useState } from "react";
 import IconButton from "../components/IconButton";
 
-function CommandContainer({ title, command, alias }) {
+function CommandContainer({ title, command, alias, nameOfMasterBranch = "" }) {
   const dialog = useRef(null);
   const [aliasName, setAliasName] = useState("");
 
+  const commandToDisplay = command.replaceAll("__main__", nameOfMasterBranch.toLowerCase());
+
   function createAliasCommand() {
-    return `git config --global alias.${aliasName} '${alias}'`;
+    return `git config --global alias.${aliasName} '${alias}'`.replaceAll("__main__", nameOfMasterBranch.toLowerCase());
   }
 
   return (
     <>
-      <div className="flex gap-2 bg-stone-700 p-4 rounded-lg items-center justify-between w-3/5">
+      <div className="flex flex-col md:flex-row  gap-2 bg-stone-700 p-4 rounded-lg items-center justify-between w-3/5">
         <p className="font-bold select-none">{title}</p>
-        <div className="flex gap-2 items-center">
-          <code className="bg-stone-950 p-2 rounded-md"> {command}</code>
+        <div className="flex flex-col md:flex-row  gap-2 items-center">
+          <code className="bg-stone-950 p-2 rounded-md"> {commandToDisplay}</code>
           <Button name={"Create alias"} onClick={() => dialog.current.showModal()} />
         </div>
       </div>
@@ -60,6 +62,7 @@ CommandContainer.propTypes = {
   title: PropTypes.string.isRequired,
   command: PropTypes.string.isRequired,
   alias: PropTypes.string.isRequired,
+  nameOfMasterBranch: PropTypes.string,
 };
 
 export default CommandContainer;

@@ -14,7 +14,7 @@ function Footer() {
 
   return (
     <>
-      <footer className="h-[20px] xl:h-[40px] bg-gray-200 bg-gradient-to-b from-teal-950 to-teal-800 flex justify-end gap-4 px-2 items-center">
+      <footer className="h-[30px] xl:h-[40px] text-xs md:text-xl bg-gray-200 bg-gradient-to-b from-teal-950 to-teal-800 flex justify-end gap-4 px-2 items-center">
         <button onClick={openDialog}>About</button>
         <p className="">
           Version: {VERSION} | Built at: {BUILD_DATE}

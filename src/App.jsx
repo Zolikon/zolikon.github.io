@@ -9,7 +9,7 @@ function App() {
       </header>
       <main className="flex flex-grow bg-stone-950">
         <menu className="w-[20%] h-full bg-teal-950 text-stone-400 p-2">
-          <ul className="flex flex-col gap-2 w-full items-center text-2xl">
+          <ul className="flex flex-col gap-2 w-full items-center text-xs md:text-2xl">
             <NavLink to="/" className={({ isActive }) => (isActive ? "font-extrabold" : "")}>
               <p className="select-none">Home</p>
             </NavLink>
