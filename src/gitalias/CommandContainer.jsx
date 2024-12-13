@@ -3,7 +3,7 @@ import Button from "../components/Button";
 import { useRef, useState } from "react";
 import IconButton from "../components/IconButton";
 
-function CommandContainer({ title, command, alias, nameOfMasterBranch = "" }) {
+function CommandContainer({ title, note, command, alias, nameOfMasterBranch = "" }) {
   const dialog = useRef(null);
   const [aliasName, setAliasName] = useState("");
 
@@ -16,7 +16,10 @@ function CommandContainer({ title, command, alias, nameOfMasterBranch = "" }) {
   return (
     <>
       <div className="flex flex-col md:flex-row  gap-2 bg-stone-700 p-4 rounded-lg items-center justify-between w-3/5">
-        <p className="font-bold select-none">{title}</p>
+        <div className="flex flex-col items-start">
+          <p className="font-bold select-none">{title}</p>
+          {note && <p className="text-stone-300 text-xs">{note}</p>}
+        </div>
         <div className="flex flex-col md:flex-row  gap-2 items-center">
           <code className="bg-stone-950 p-2 rounded-md"> {commandToDisplay}</code>
           <Button name={"Create alias"} onClick={() => dialog.current.showModal()} />
@@ -60,6 +63,7 @@ function CommandContainer({ title, command, alias, nameOfMasterBranch = "" }) {
 
 CommandContainer.propTypes = {
   title: PropTypes.string.isRequired,
+  note: PropTypes.string,
   command: PropTypes.string.isRequired,
   alias: PropTypes.string.isRequired,
   nameOfMasterBranch: PropTypes.string,
