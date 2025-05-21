@@ -5,6 +5,7 @@ import App from "./App.jsx";
 import "./styles.css";
 import GitAlias from "./gitalias/GitAlias.jsx";
 import Home from "./Home.jsx";
+import DesignTools from "./design/DesignTools.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -13,8 +14,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/" element={<App />}>
           <Route path="" element={<Home />} />
           <Route path="gitalias" element={<GitAlias />} />
+          <Route path="design" element={<DesignTools />} />
         </Route>
       </Routes>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
