@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 function Tool({ name, link, desc }) {
   return (
-    <div className="flex items-center justify-between w-2/5 py-2 gap-4 hover:bg-gray-300 rounded-md px-3 group">
+    <div className="flex items-center justify-between w-2/5 py-2 gap-4 hover:bg-gray-300 rounded-md px-3 group transition-all duration-300">
       <a
         href={link}
         target="_blank"

@@ -1,16 +1,21 @@
 import PropTypes from "prop-types";
 import Button from "../components/Button";
 import { useRef, useState } from "react";
-import IconButton from "../components/IconButton";
 
-function CommandContainer({ title, note, command, alias, nameOfMasterBranch = "" }) {
+function CommandContainer({ title, note, command, alias, defaultName, nameOfMasterBranch = "" }) {
   const dialog = useRef(null);
-  const [aliasName, setAliasName] = useState("");
+  const [aliasName, setAliasName] = useState(defaultName || "");
 
   const commandToDisplay = command.replaceAll("__main__", nameOfMasterBranch.toLowerCase());
 
   function createAliasCommand() {
     return `git config --global alias.${aliasName} '${alias}'`.replaceAll("__main__", nameOfMasterBranch.toLowerCase());
+  }
+
+  function handleBackdropClick(event) {
+    if (event.target === dialog.current) {
+      dialog.current.close();
+    }
   }
 
   return (
@@ -25,7 +30,12 @@ function CommandContainer({ title, note, command, alias, nameOfMasterBranch = ""
           <Button name={"Create alias"} onClick={() => dialog.current.showModal()} />
         </div>
       </div>
-      <dialog ref={dialog} className=" rounded-lg" onClose={() => setAliasName("")}>
+      <dialog
+        ref={dialog}
+        className=" rounded-lg"
+        onClose={() => setAliasName(defaultName)}
+        onClick={handleBackdropClick}
+      >
         <div className="h-[60vh] w-[60vw] flex flex-col justify-center items-center bg-stone-500">
           <div className="h-full w-[90%] flex flex-col items-center gap-2 justify-center">
             <input
@@ -34,23 +44,15 @@ function CommandContainer({ title, note, command, alias, nameOfMasterBranch = ""
               className="rounded-md p-2"
               placeholder="Alias name"
             />
-            {aliasName ? (
-              <div className="flex gap-2 items-center w-full h-20">
-                <code className="bg-stone-950 text-stone-300 p-2 rounded-md w-[90%] text-center">
-                  {createAliasCommand()}
-                </code>
-                <IconButton
-                  iconName={"content_copy"}
-                  onClick={() => navigator.clipboard.writeText(createAliasCommand())}
-                />
-              </div>
-            ) : (
-              <div className="h-20 w-full flex items-center justify-center">Name your alias</div>
-            )}
+            <code className="bg-stone-950 text-stone-300 p-2 rounded-md w-[90%] text-center">
+              {createAliasCommand()}
+            </code>
             <Button
-              name={"Close"}
+              disabled={!aliasName}
+              name={"Copy & Close"}
               onClick={() => {
-                setAliasName("");
+                navigator.clipboard.writeText(createAliasCommand());
+                setAliasName(defaultName);
                 dialog.current.close();
               }}
             />
@@ -67,6 +69,7 @@ CommandContainer.propTypes = {
   command: PropTypes.string.isRequired,
   alias: PropTypes.string.isRequired,
   nameOfMasterBranch: PropTypes.string,
+  defaultName: PropTypes.string,
 };
 
 export default CommandContainer;

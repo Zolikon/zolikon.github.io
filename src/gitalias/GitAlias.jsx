@@ -17,35 +17,41 @@ function GitAlias() {
           title="Enhanced log"
           command="git log --oneline --decorate --graph -n 10"
           alias="log --oneline --decorate --graph -n 10"
+          defaultName="lego"
         />
         <CommandContainer
           title="Save changes"
           note="Will need force push"
           command="git add . && git commit --amend --no-edit"
           alias="!f() { git add . && git commit --amend --no-edit; }; f"
+          defaultName="save"
         />
         <CommandContainer
           title="Current branch name"
           note="Used as dependency for other commands as 'bname'"
           command="git rev-parse --abbrev-ref HEAD"
           alias="rev-parse --abbrev-ref HEAD"
+          defaultName="bname"
         />
         <CommandContainer
           title="Pulls current branch"
           note="Needs bname alias to be set"
           command='git pull origin "$(git bname)"'
           alias='!f() { git pull origin "$(git bname)"; };f'
+          defaultName="down"
         />
         <CommandContainer
           title="Pushes current branch"
           note="Needs bname alias to be set"
-          command='git git push origin "$(git bname)"'
-          alias='!f() { git push origin ∗ "$(git bname)"; }; f'
+          command='git push origin "$(git bname)"'
+          alias='!f() { git push origin "$(git bname)"; }; f'
+          defaultName="up"
         />
         <CommandContainer
           title="List of aliases"
           command="git config --global -l | grep alias"
           alias="!f() { git config --global -l | grep alias; };f"
+          defaultName="aliases"
         />
         <CommandContainer
           title="Changed files"
@@ -53,6 +59,7 @@ function GitAlias() {
           command="git diff __main__ --name-only"
           alias="diff __main__ --name-only"
           nameOfMasterBranch={nameOfMasterBranch}
+          defaultName="changed"
         />
         <CommandContainer
           title="Restore from primary branch"
@@ -60,6 +67,7 @@ function GitAlias() {
           command="git checkout __main__"
           alias="checkout __main__"
           nameOfMasterBranch={nameOfMasterBranch}
+          defaultName="restore"
         />
       </div>
     </div>
